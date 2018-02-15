@@ -32,7 +32,6 @@ namespace ICCompatition.Models
             
             return query;
         }
-      
         public void Insert(T entity)
         {
             //Regex _dateregex = new Regex(@"(\d{4})-(\d{1,2})-(\d{1,2})");
@@ -44,20 +43,20 @@ namespace ICCompatition.Models
             {
                 throw new ArgumentNullException("entity");
             }
-            if (entity.Id!=null && entity.ExerciseName!=null && entity.ExerciseDateTime!=null 
-                && entity.DurationInMinutes!=null)
+            if (entity.Id != null && entity.ExerciseName != null && entity.ExerciseDateTime != null && entity.DurationInMinutes != null)
             {
 
-                if(Regex.IsMatch(entity.ExerciseDateTime.ToString("yyyy-MM-dd"), @"^((((1[6-9]|[2-9]\d)\d{2})-(0?[13578]|1[02])-(0?[1-9]|[12]\d|3[01]))|(((1[6-9]|[2-9]\d)\d{2})-(0?[13456789]|1[012])-(0?[1-9]|[12]\d|30))|(((1[6-9]|[2-9]\d)\d{2})-0?2-(0?[1-9]|1\d|2[0-9]))|(((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))-0?2-29-))$"))
+                if (Regex.IsMatch(entity.ExerciseDateTime.ToString("yyyy-MM-dd"), @"^((((1[6-9]|[2-9]\d)\d{2})-(0?[13578]|1[02])-(0?[1-9]|[12]\d|3[01]))|(((1[6-9]|[2-9]\d)\d{2})-(0?[13456789]|1[012])-(0?[1-9]|[12]\d|30))|(((1[6-9]|[2-9]\d)\d{2})-0?2-(0?[1-9]|1\d|2[0-9]))|(((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))-0?2-29-))$"))
                 {
                     if (_Durationregex.IsMatch(entity.DurationInMinutes.ToString()))
                     {
                         Records.Add(entity);
-                    }                 
+                    }
                 }
             }
+      
+        }                
 
-        }
         public void Delete(T entity)
         {
             if (entity == null)

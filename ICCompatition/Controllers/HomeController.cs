@@ -63,12 +63,31 @@ namespace ICCompatition.Controllers
                 }
                 else
                 {
+                    if (!ValidRecord(model))
+                    {
+                        return Json(new { result = false, responseText = "This type of exercise has been done today" },
+                                            JsonRequestBehavior.AllowGet);
+                    }
                     model.Id = Repository<ExerciseViewModel>.Records.Count+100;
                     //Repository<ExerciseViewModel>.Records.Add(model);
                     repository.Insert(model);   
                     result = true;          
                 }
             return Json(result, JsonRequestBehavior.AllowGet);
-        }      
-    }    
+        }
+        private bool ValidRecord(ExerciseViewModel record)
+        {
+            /*
+             *A specific exercise (ie. exerciseName) can only be entered once on a single day.
+             *This constraint only needs to be enforced on the server. The mechanism used to
+             *enforce this constraint is at your own discretion.
+             */
+
+            var result = Repository<ExerciseViewModel>.Records.Any(r =>
+                r.ExerciseName == record.ExerciseName && r.ExerciseDateTime == record.ExerciseDateTime);
+
+            return !result;
+        }
+
+    }
 }
