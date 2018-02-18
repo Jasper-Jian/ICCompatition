@@ -1,11 +1,7 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Web;
 
 namespace ICCompatition.Models
 {
@@ -19,9 +15,7 @@ namespace ICCompatition.Models
         public IQueryable<T> Get(int id)
         {
             
-            IQueryable<T> query = Records.AsQueryable();
-            query = query.Where(x => x.Id == id).AsQueryable();
-
+            IQueryable<T> query = Records.Where(x => x.Id == id).AsQueryable();
             return query;
         }
 
@@ -29,7 +23,6 @@ namespace ICCompatition.Models
         {
            
             IQueryable<T> query = Records.AsQueryable();
-            
             return query;
         }
         public void Insert(T entity)
@@ -43,9 +36,8 @@ namespace ICCompatition.Models
             {
                 throw new ArgumentNullException("entity");
             }
-            if (entity.Id != null && entity.ExerciseName != null && entity.ExerciseDateTime != null && entity.DurationInMinutes != null)
+            if (entity.ExerciseName != null && entity.ExerciseDateTime != null)
             {
-
                 if (Regex.IsMatch(entity.ExerciseDateTime.ToString("yyyy-MM-dd"), @"^((((1[6-9]|[2-9]\d)\d{2})-(0?[13578]|1[02])-(0?[1-9]|[12]\d|3[01]))|(((1[6-9]|[2-9]\d)\d{2})-(0?[13456789]|1[012])-(0?[1-9]|[12]\d|30))|(((1[6-9]|[2-9]\d)\d{2})-0?2-(0?[1-9]|1\d|2[0-9]))|(((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))-0?2-29-))$"))
                 {
                     if (_Durationregex.IsMatch(entity.DurationInMinutes.ToString()))
@@ -53,8 +45,7 @@ namespace ICCompatition.Models
                         Records.Add(entity);
                     }
                 }
-            }
-      
+            }     
         }                
 
         public void Delete(T entity)

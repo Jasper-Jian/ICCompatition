@@ -1,21 +1,4 @@
 ﻿
-$.get("/Home/GetList", null, DataBind);
-function DataBind(List) {
-    //This Code For Receive All Data From Controller And Show It In Client Side
-    var SetData = $("#SetList");
-    for (var i = 0; i < List.length; i++) {
-        var Data = "<tr class='row_" + List[i].Id + "'>" +
-            "<td>" + List[i].Id + "</td>" +
-            "<td>" + List[i].ExerciseName + "</td>" +
-            "<td>" + List[i].ExerciseDateTime + "</td>" +
-            "<td>" + List[i].DurationInMinutes + "</td>" +
-            "</tr>";
-        SetData.append(Data);
-        $("#LoadingStatus").html(" ");
-
-    }
-}
-
 //render data table
 $(document).ready(function () {
     $('#GetTable').DataTable({
@@ -27,7 +10,24 @@ $(document).ready(function () {
         columns: [
             { data: "Id" },
             { data: "ExerciseName" },
-            { data: "ExerciseDateTime" },
+            {
+                data: "ExerciseDateTime",
+                render: function (data) {
+                    if (data === null) return "";
+                    var pattern = /Date\(([^)]+)\)/;
+                    var result = pattern.exec(data);
+                    var dt = new Date(parseFloat(result[1]));
+                    var month = dt.getMonth() + 1;
+                    var date = dt.getDate();
+                    if (month < 10) {
+                        month = "0" + month;
+                    };
+                    if (data < 10) {
+                        date = "0" + date;
+                    }
+                    return dt.getFullYear() + "-" + month + "-" + date;
+                }
+               },
             { data: "DurationInMinutes" },
         ],
         order: [[2, "dsce"]]
@@ -35,16 +35,17 @@ $(document).ready(function () {
 
 });
 //popup window
-function AddNewStudent(Id) {
+function AddNewExercise(Id) {
     $("#Id").val(0);
     $("#form")[0].reset();
-    $("#ModalTitle").html("Add New Student");
+    $("#ModalTitle").html("Add New Exercise");
     $("#MyModal").modal("show");
 }
 //on click save record button
 $("#SaveRecord").click(function () {
-    $('.ui.form').form('validate form');       
+    $('#form').form('validate form');
 })
+
 //submission form validation using semantic ui
 $("#form").form(
     {
@@ -52,7 +53,7 @@ $("#form").form(
         on: 'blur',
         fields: {
             ExerciseName: {
-            identifier: 'ExerciseName',
+                identifier: 'ExerciseName',
                 rules: [
                     {
                         type: 'empty',
@@ -65,7 +66,7 @@ $("#form").form(
                 ]
             },
             ExerciseDateTime: {
-            identifier: 'ExerciseDateTime',
+                identifier: 'ExerciseDateTime',
                 rules: [
                     {
                         type: 'empty',
@@ -78,7 +79,7 @@ $("#form").form(
                 ]
             },
             DurationInMinutes: {
-            identifier: 'DurationInMinutes',
+                identifier: 'DurationInMinutes',
                 rules: [
                     {
                         type: 'empty',
@@ -91,22 +92,22 @@ $("#form").form(
                 ]
             }
         },
-            onSuccess: function (event, fields) {
-                $('#info').html("on success");
-                event.preventDefault();
-                add();
-    }
-});
+        onSuccess: function (event, fields) {
+            $('#info').html("on success");
+            event.preventDefault();
+            add();
+        }
+    });
 // add the record using ajax
 function add() {
     var data = $("#form").serialize();
     $.ajax({
-    type: "post",
+        type: "post",
         url: "/Home/AddExercise",
         data: data,
         success: function (result) {
-        window.location.href = "/Home/index";
-        $("#MyModal").modal("hide");
+            window.location.href = "/Home/index";
+            $("#MyModal").modal("hide");
         }
     })
 }

@@ -3,22 +3,22 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-<div class="container">
-    <a href="#" class="ui primary button" onclick="AddNewStudent(0)"><i class="icon user"></i>Add Student</a> <br /><br />
-    <table id="GetTable" class="ui selectable inverted table" style="margin-top:5%">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Exercise Name</th>
-                <th>Exercise Date Time</th>
-                <th>Duration In Minutes</th>
-            </tr>
-        </thead>
-        <tbody id="SetList"></tbody>
-    </table>
+<div class="ui container">
+    <div class="container">
+        <a href="#" class="ui primary button" onclick="AddNewExercise(0)"><i class="icon user"></i>Add Exercise</a> <br /><br />
+        <table id="GetTable" class="ui selectable inverted table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Exercise Name</th>
+                    <th>Exercise Date Time</th>
+                    <th>Duration In Minutes</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
 </div>
-
 <div class="ui modal" id="MyModal">
     <div class="header">
         <a href="#" class="close" data-dismiss="modal">&times;</a>
@@ -30,20 +30,21 @@
 
                 @Html.HiddenFor(m => m.Id, new { @id = "Id" })
                 <div class="field">
-                    <label>Exercise Name</label>
-                    @Html.TextBoxFor(m => m.ExerciseName, new { @id = "ExerciseName", @class = "form-control", @placeholder = "Exercise Name*" })
+                    <label>Exercise Name *</label>
+                    @Html.TextBoxFor(m => m.ExerciseName, new { @id = "ExerciseName", @class = "form-control", @placeholder = "eg. Football (Exercise Name) *" })
                 </div>
                 <div class="field">
-                    <label>Exercise Date Time</label>
-                    @Html.TextBoxFor(m => m.ExerciseDateTime, new { @id = "ExerciseDateTime", @class = "form-control", @placeholder = "eg. 2017-10-10 Format(YYYY-MM-DD)*" })
+                    <label>Exercise Date Time *</label>
+                        <div class="ui input left icon">
+                            <i class="calendar icon"></i>
+                            @Html.TextBoxFor(m => m.ExerciseDateTime, new { @id = "ExerciseDateTime", @class = "form-control", @placeholder = "eg. 2017-10-10 Format(YYYY-MM-DD)*", @value = "2017-06-01" })
+                        </div>
                 </div>
                 <div class="field">
-                    <label>Exercise Duration In Minutes</label>
+                    <label>Exercise Duration In Minutes *</label>
                     @Html.TextBoxFor(m => m.DurationInMinutes, new { @id = "DurationInMinutes", @class = "form-control", @placeholder = "Range between (1~120)*" })
                 </div>
                 <div class="modal-footer">
-                    <a href="#" class="ui cancel button" data-dismiss="modal">Cancle</a>
-
                     <div class="ui submit button" id="SaveRecord">Save</div>
                     <div class="ui error message"></div>
                 </div>
@@ -51,4 +52,5 @@
             </fieldset>
         </form>
     </div>
+
 </div>

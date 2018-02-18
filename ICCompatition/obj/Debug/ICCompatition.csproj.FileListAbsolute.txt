@@ -43,3 +43,4 @@ c:\users\jasper\documents\visual studio 2017\Projects\ICCompatition\ICCompatitio
 c:\users\jasper\documents\visual studio 2017\Projects\ICCompatition\ICCompatition\obj\Debug\ICCompatition.csproj.CoreCompileInputs.cache
 c:\users\jasper\documents\visual studio 2017\Projects\ICCompatition\ICCompatition\obj\Debug\ICCompatition.dll
 c:\users\jasper\documents\visual studio 2017\Projects\ICCompatition\ICCompatition\obj\Debug\ICCompatition.pdb
+C:\Users\jasper\Documents\Visual Studio 2017\Projects\ICCompatition\ICCompatition\obj\Debug\ICCompatition.csprojResolveAssemblyReference.cache
